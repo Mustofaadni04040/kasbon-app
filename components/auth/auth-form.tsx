@@ -32,19 +32,19 @@ const authContent: Record<
   }
 > = {
   login: {
-    title: "Masuk ke Kasbon",
-    description: "Masuk pakai email dan password Supabase.",
+    title: "Masuk ke Kasflow",
+    description: "Masuk pakai email dan password yang sudah terdaftar.",
     submitLabel: "Masuk",
-    pendingLabel: "Sedang masuk...",
+    pendingLabel: "Loading...",
     switchText: "Belum punya akun?",
     switchLabel: "Daftar di sini",
     switchHref: "/signup",
   },
   signup: {
     title: "Buat akun baru",
-    description: "Daftar cepat untuk mulai catat utang piutang pribadi.",
+    description: "Daftar cepat untuk mulai menggunakan Kasflow.",
     submitLabel: "Buat akun",
-    pendingLabel: "Sedang membuat akun...",
+    pendingLabel: "Loading...",
     switchText: "Sudah punya akun?",
     switchLabel: "Masuk di sini",
     switchHref: "/login",

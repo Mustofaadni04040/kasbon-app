@@ -1,6 +1,6 @@
-# Kasbon App
+# Kasflow App
 
-Starter project untuk hiring task aplikasi Kasbon menggunakan:
+Starter project untuk hiring task aplikasi Kasflow menggunakan:
 
 - Next.js 16 App Router
 - TypeScript
@@ -73,7 +73,7 @@ Penjelasan singkat:
 - Landing page awal dengan CTA login dan signup
 - Login form dan signup form berbasis Supabase Auth
 - Logout action
-- Protected dashboard placeholder
+- Dashboard summary, filter, dan debt list yang consume API
 - Supabase browser client, server client, dan `proxy.ts` untuk refresh session
 - Migration SQL tabel `debts` + trigger `updated_at` + RLS policy
 - API `GET/POST /api/debts` dan `PATCH/DELETE /api/debts/[id]`
@@ -90,8 +90,7 @@ Supaya history commit kamu rapi, saya saranin pola ini:
 
 ## Next Step yang Disarankan
 
-1. Implement API `debts`
-2. Buat dashboard summary dan list
-3. Tambah form create/edit debt
-4. Sambungkan filter status dan type
-5. Rapikan README akhir, deploy, dan Loom
+1. Tambah form create/edit debt
+2. Tambah action tandai lunas dan hapus
+3. Hubungkan mutasi ke refresh dashboard
+4. Rapikan README akhir, deploy, dan Loom

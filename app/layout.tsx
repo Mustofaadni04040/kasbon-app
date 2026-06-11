@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kasbon App",
-  description: "Starter project untuk hiring task aplikasi Kasbon.",
+  title: "Kasflow App",
+  description: "Starter project untuk hiring task aplikasi Kasflow.",
 };
 
 export default function RootLayout({

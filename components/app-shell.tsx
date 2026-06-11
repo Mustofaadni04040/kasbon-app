@@ -24,7 +24,7 @@ export function AppShell() {
         <section className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
           <div className="flex items-center gap-3 text-sm font-medium text-zinc-500">
             <Wallet className="h-4 w-4" />
-            <span>Kasbon App</span>
+            <span>Kasflow App</span>
           </div>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
             Next.js 16 starter siap untuk hiring task

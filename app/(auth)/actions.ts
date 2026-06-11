@@ -79,6 +79,8 @@ export async function signUpAction(
     email,
     password,
   });
+  console.log("error", error);
+  console.log("data", data);
 
   if (error) {
     return {
@@ -88,7 +90,8 @@ export async function signUpAction(
   }
 
   if (data.session) {
-    redirect("/dashboard");
+    await supabase.auth.signOut();
+    redirect("/login?registered=1");
   }
 
   return {
