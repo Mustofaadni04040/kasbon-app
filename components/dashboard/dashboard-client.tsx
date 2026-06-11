@@ -10,6 +10,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { CounterpartGroups } from "@/components/dashboard/counterpart-groups";
+import { DeleteDebtModal } from "@/components/dashboard/delete-debt-modal";
 import { DebtFormModal } from "@/components/dashboard/debt-form-modal";
 import { DebtFilters } from "@/components/dashboard/debt-filters";
 import { DebtList } from "@/components/dashboard/debt-list";
@@ -49,8 +50,11 @@ export function DashboardClient() {
   const [refreshIndex, setRefreshIndex] = useState<number>(0);
   const [activeDebtId, setActiveDebtId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [formMode, setFormMode] = useState<"create" | "edit">("create");
   const [selectedDebt, setSelectedDebt] = useState<DebtRecord | null>(null);
+  const [selectedDebtToDelete, setSelectedDebtToDelete] =
+    useState<DebtRecord | null>(null);
   const [isSubmittingForm, setIsSubmittingForm] = useState<boolean>(false);
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -150,6 +154,22 @@ export function DashboardClient() {
     setFormError(null);
   }
 
+  function openDeleteModal(item: DebtRecord): void {
+    setSelectedDebtToDelete(item);
+    setErrorMessage(null);
+    setFeedbackMessage(null);
+    setIsDeleteModalOpen(true);
+  }
+
+  function closeDeleteModal(): void {
+    if (activeDebtId !== null) {
+      return;
+    }
+
+    setIsDeleteModalOpen(false);
+    setSelectedDebtToDelete(null);
+  }
+
   async function handleFormSubmit(
     payload: CreateDebtPayload | UpdateDebtPayload,
   ): Promise<void> {
@@ -202,22 +222,20 @@ export function DashboardClient() {
     }
   }
 
-  async function handleDelete(item: DebtRecord): Promise<void> {
-    const isConfirmed = window.confirm(
-      `Hapus catatan untuk ${item.counterpartName}?`,
-    );
-
-    if (!isConfirmed) {
+  async function handleDeleteConfirm(): Promise<void> {
+    if (!selectedDebtToDelete) {
       return;
     }
 
-    setActiveDebtId(item.id);
+    setActiveDebtId(selectedDebtToDelete.id);
     setErrorMessage(null);
     setFeedbackMessage(null);
 
     try {
-      await deleteDebt(item.id);
+      await deleteDebt(selectedDebtToDelete.id);
       setFeedbackMessage("Catatan kasbon berhasil dihapus.");
+      setIsDeleteModalOpen(false);
+      setSelectedDebtToDelete(null);
       refreshDashboard();
     } catch (error) {
       setErrorMessage(
@@ -354,9 +372,7 @@ export function DashboardClient() {
           items={items}
           activeDebtId={activeDebtId}
           onEdit={openEditForm}
-          onDelete={(item) => {
-            void handleDelete(item);
-          }}
+          onDelete={openDeleteModal}
           onSettle={(item) => {
             void handleSettle(item);
           }}
@@ -375,6 +391,14 @@ export function DashboardClient() {
           onSubmit={handleFormSubmit}
         />
       ) : null}
+
+      <DeleteDebtModal
+        debt={selectedDebtToDelete}
+        isOpen={isDeleteModalOpen}
+        isDeleting={activeDebtId !== null}
+        onClose={closeDeleteModal}
+        onConfirm={handleDeleteConfirm}
+      />
     </div>
   );
 }
