@@ -6,10 +6,16 @@ export default function DashboardPage() {
       <section className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-8">
         <div className="flex flex-col gap-4">
           <div>
-            <p className="text-sm font-medium text-zinc-500">Dashboard Kasbon</p>
+            <p className="text-sm font-medium text-zinc-500">
+              Dashboard Kasflow
+            </p>
             <h1 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">
               Ringkasan utang piutang pribadi
             </h1>
+            <p className="text-sm font-medium text-zinc-500">
+              Pantau siapa yang masih berutang ke kamu, siapa yang harus kamu
+              bayar, dan lihat posisi keuanganmu secara cepat.
+            </p>
           </div>
         </div>
       </section>

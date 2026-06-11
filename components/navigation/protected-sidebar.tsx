@@ -58,7 +58,7 @@ export function ProtectedSidebar({ userEmail }: ProtectedSidebarProps) {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-zinc-950">
-                    Kasbon App
+                    Kasflow App
                   </p>
                   <p className="text-xs text-zinc-500">Navigation menu</p>
                 </div>
@@ -100,7 +100,7 @@ export function ProtectedSidebar({ userEmail }: ProtectedSidebarProps) {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-zinc-950">
-                      Kasbon App
+                      Kasflow App
                     </p>
                     <p className="text-xs text-zinc-500">
                       Hiring task navigation
@@ -176,7 +176,7 @@ export function ProtectedSidebar({ userEmail }: ProtectedSidebarProps) {
               </div>
               <div>
                 <p className="text-sm font-semibold text-zinc-950">
-                  Kasbon App
+                  Kasflow App
                 </p>
                 <p className="text-xs text-zinc-500">Personal debt tracker</p>
               </div>

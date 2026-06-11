@@ -10,8 +10,8 @@ export default function ChartsPage() {
               Perbandingan kasbon aktif
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-600 sm:text-base">
-              Halaman bonus untuk menampilkan visual perbandingan total dihutangi
-              dan total saya hutang.
+              Halaman untuk menampilkan visual perbandingan total dihutangi dan
+              total saya hutang.
             </p>
           </div>
         </div>
