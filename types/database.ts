@@ -13,7 +13,7 @@ export interface Database {
         Row: {
           id: string;
           user_id: string;
-          type: "debt_to_me" | "i_owe";
+          type: "owed_to_me" | "i_owe";
           counterpart_name: string;
           amount: number;
           note: string | null;
@@ -25,7 +25,7 @@ export interface Database {
         Insert: {
           id?: string;
           user_id: string;
-          type: "debt_to_me" | "i_owe";
+          type: "owed_to_me" | "i_owe";
           counterpart_name: string;
           amount: number;
           note?: string | null;
@@ -37,7 +37,7 @@ export interface Database {
         Update: {
           id?: string;
           user_id?: string;
-          type?: "debt_to_me" | "i_owe";
+          type?: "owed_to_me" | "i_owe";
           counterpart_name?: string;
           amount?: number;
           note?: string | null;
@@ -60,7 +60,7 @@ export interface Database {
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: {
-      debt_type: "debt_to_me" | "i_owe";
+      debt_type: "owed_to_me" | "i_owe";
     };
     CompositeTypes: Record<string, never>;
   };

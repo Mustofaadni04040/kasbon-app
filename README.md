@@ -76,6 +76,7 @@ Penjelasan singkat:
 - Protected dashboard placeholder
 - Supabase browser client, server client, dan `proxy.ts` untuk refresh session
 - Migration SQL tabel `debts` + trigger `updated_at` + RLS policy
+- API `GET/POST /api/debts` dan `PATCH/DELETE /api/debts/[id]`
 
 ## Commit Checkpoint
 

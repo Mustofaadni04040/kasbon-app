@@ -7,7 +7,7 @@ begin
     from pg_type
     where typname = 'debt_type'
   ) then
-    create type public.debt_type as enum ('debt_to_me', 'i_owe');
+    create type public.debt_type as enum ('owed_to_me', 'i_owe');
   end if;
 end $$;
 

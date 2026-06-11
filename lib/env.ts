@@ -3,23 +3,24 @@ export type PublicEnv = {
   supabaseAnonKey: string;
 };
 
-type PublicEnvKey =
-  | "NEXT_PUBLIC_SUPABASE_URL"
-  | "NEXT_PUBLIC_SUPABASE_ANON_KEY";
+export function getPublicEnv(): PublicEnv {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-function getRequiredEnv(name: PublicEnvKey): string {
-  const value = process.env[name];
-
-  if (!value) {
-    throw new Error(`Environment variable ${name} belum diisi.`);
+  if (!supabaseUrl) {
+    throw new Error(
+      "Environment variable NEXT_PUBLIC_SUPABASE_URL belum diisi.",
+    );
   }
 
-  return value;
-}
+  if (!supabaseAnonKey) {
+    throw new Error(
+      "Environment variable NEXT_PUBLIC_SUPABASE_ANON_KEY belum diisi.",
+    );
+  }
 
-export function getPublicEnv(): PublicEnv {
   return {
-    supabaseUrl: getRequiredEnv("NEXT_PUBLIC_SUPABASE_URL"),
-    supabaseAnonKey: getRequiredEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+    supabaseUrl,
+    supabaseAnonKey,
   };
 }
