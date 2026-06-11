@@ -16,7 +16,7 @@ Kasflow adalah aplikasi kasbon sederhana untuk mencatat utang piutang pribadi. U
 ## Demo
 
 - Repository: https://github.com/Mustofaadni04040/kasbon-app
-- Vercel: kasflow-theta.vercel.app
+- Vercel: [kasflow-theta.vercel.app](https://kasflow-theta.vercel.app/)
 - Gunakan akun dengan Email: useratest@gmail.com dan Password: user1234 untuk demo
 
 ---
