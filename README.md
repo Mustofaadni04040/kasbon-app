@@ -1,123 +1,173 @@
-# Kasflow App
+# Kasflow
 
-Starter project untuk hiring task aplikasi Kasflow menggunakan:
+Kasflow adalah aplikasi kasbon sederhana untuk mencatat utang piutang pribadi. User dapat mencatat siapa yang berutang kepadanya atau siapa yang harus dibayar, mengelola status pelunasan, serta melihat ringkasan posisi utang piutang secara real-time.
+
+## Tech Stack
 
 - Next.js 16 App Router
 - TypeScript
 - Tailwind CSS v4
-- Supabase Auth + PostgreSQL
-- Lucide React
+- Supabase Auth
+- Supabase PostgreSQL
+- Row Level Security (RLS)
 - Zod
-- ECharts
+- Lucide React
 
-## Setup Lokal
+## Demo
 
-### 1. Install dependency
+- Repository: https://github.com/Mustofaadni04040/kasbon-app
+- Vercel: kasflow-theta.vercel.app
+- Gunakan akun dengan Email: useratest@gmail.com dan Password: user1234 untuk demo
+
+---
+
+## Setup Local
+
+Clone repository:
+
+```bash
+git clone https://github.com/Mustofaadni04040/kasbon-app.git
+cd kasflow
+```
+
+Install dependency:
 
 ```bash
 npm install
 ```
 
-### 2. Siapkan environment variable
+Buat file `.env.local`:
 
-Copy file contoh env:
-
-```bash
-copy .env.example .env.local
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_publishable_key
 ```
 
-Lalu isi value berikut:
-
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-
-### 3. Jalankan migration database
-
-File migration awal ada di:
-
-```text
-supabase/migrations/20260611133000_create_debts.sql
-```
-
-Jalankan lewat Supabase SQL Editor atau Supabase CLI.
-
-### 4. Jalankan development server
+Jalankan aplikasi:
 
 ```bash
 npm run dev
 ```
 
-Buka `http://localhost:3000`.
-
-## Struktur Folder
+Akses:
 
 ```text
-app/
-components/
-lib/
-supabase/
-types/
-validations/
+http://localhost:3000
 ```
 
-Penjelasan singkat:
+---
 
-- `app` -> routing App Router, layout, page, server action, dan API route
-- `components` -> komponen UI reusable
-- `lib` -> helper umum, auth helper, Supabase client, formatter, env
-- `supabase` -> migration SQL dan file terkait Supabase
-- `types` -> shared TypeScript types
-- `validations` -> schema validasi input
+## Database Migration
 
-## Yang Sudah Discaffold
+Migration tersedia pada folder:
 
-- Landing page awal dengan CTA login dan signup
-- Login form dan signup form berbasis Supabase Auth
-- Logout action
-- Dashboard summary, filter, dan debt list yang consume API
-- Create, edit, tandai lunas, dan hapus debt
-- Group multiple debts dari orang yang sama
-- Page chart bonus di `/charts`
-- Supabase browser client, server client, dan `proxy.ts` untuk refresh session
-- Migration SQL tabel `debts` + trigger `updated_at` + RLS policy
-- API `GET/POST /api/debts` dan `PATCH/DELETE /api/debts/[id]`
+```text
+supabase/migrations
+```
 
-## Library Tambahan
+Cara menjalankan migration:
 
-- `zod` -> validasi request body dan query
-- `lucide-react` -> icon UI ringan dan konsisten
-- `echarts` + `echarts-for-react` -> page bonus bar chart compare total dihutangi vs total saya hutang
+1. Buka Supabase Dashboard.
+2. Masuk ke SQL Editor.
+3. Copy seluruh isi file migration.
+4. Jalankan query.
+5. Pastikan tabel `debts` berhasil dibuat.
+6. Pastikan seluruh RLS Policy aktif.
+7. Pastikan settingan Supabase Authentication → Email → Disable email confirmation, untuk register
 
-## Submission Checklist
+### Tabel Debts
 
-- [ ] Signup dan login berjalan pakai Supabase Auth
-- [ ] Logout berjalan
-- [ ] Route protected hanya bisa diakses user login
-- [ ] Migration `debts` sudah dijalankan di Supabase
-- [ ] RLS sudah dites dengan minimal 2 user berbeda
-- [ ] API debts aman dan hanya akses data milik user login
-- [ ] Format uang tampil `Rp 1.234.000`
-- [ ] Dashboard summary, filter, dan list berjalan
-- [ ] Create, edit, tandai lunas, dan hapus berjalan lalu tetap konsisten setelah refresh
-- [ ] Group multiple debts tampil
-- [ ] Bonus chart page `/charts` tampil
-- [ ] README final berisi setup, approach, trade-off, dan time spent
-- [ ] Deploy Vercel aktif
-- [ ] Loom demo siap
+| Column           | Type        |
+| ---------------- | ----------- |
+| id               | uuid        |
+| user_id          | uuid        |
+| type             | debt_type   |
+| counterpart_name | text        |
+| amount           | bigint      |
+| note             | text        |
+| due_date         | date        |
+| settled_at       | timestamptz |
+| created_at       | timestamptz |
+| updated_at       | timestamptz |
 
-## Commit Checkpoint
+### RLS Policies
 
-Supaya history commit kamu rapi, saya saranin pola ini:
+- User hanya dapat melihat data miliknya sendiri.
+- User hanya dapat membuat data miliknya sendiri.
+- User hanya dapat mengubah data miliknya sendiri.
+- User hanya dapat menghapus data miliknya sendiri.
 
-1. `chore: install supabase lucide zod and auth scaffold`
-2. `feat: add debts schema migration and rls policies`
-3. `feat: implement debts api endpoints`
-4. `feat: build dashboard summary and debt list`
-5. `feat: add create edit and settle debt flows`
+---
 
-## Next Step yang Disarankan
+## Features
 
-1. Tes manual end-to-end dengan 2 user
-2. Rapikan copy README final: approach, trade-off, time spent
-3. Deploy ke Vercel
-4. Rekam Loom
+### Authentication
+
+- Signup menggunakan email dan password
+- Login menggunakan email dan password
+- Logout
+- Protected Route
+
+### Debt Management
+
+- Tambah catatan kasbon
+- Edit catatan kasbon
+- Hapus catatan kasbon
+- Tandai lunas
+- Validasi client dan server
+
+### Dashboard
+
+- Total dihutangi
+- Total saya hutang
+- Net position
+- Search berdasarkan nama
+- Filter status
+- Filter tipe
+- Sorting data
+
+### UX
+
+- Responsive layout
+- Empty state
+- Loading state
+- Error state
+- Format Rupiah Indonesia (`id-ID`)
+- Relative date
+
+---
+
+## Approach
+
+Fokus utama saya dalam implementasi aplikasi ini adalah keamanan data dan konsistensi business logic. Seluruh data kasbon disimpan di Supabase PostgreSQL dengan Row Level Security (RLS) aktif sehingga setiap user hanya dapat mengakses datanya sendiri, bahkan ketika endpoint database diakses secara langsung. Untuk validasi input saya menggunakan Zod agar validasi dapat diterapkan secara konsisten di sisi client maupun server. Nominal kasbon disimpan sebagai `BIGINT` dalam satuan Rupiah utuh untuk menghindari masalah presisi yang umum terjadi pada tipe data floating point.
+
+---
+
+## Trade-offs
+
+Jika memiliki tambahan waktu sekitar satu hari, saya akan melakukan beberapa peningkatan berikut:
+
+- Menambahkan pagination atau infinite scrolling untuk menangani data dalam jumlah besar.
+- Menambahkan export data ke CSV.
+- Menambahkan dashboard analytics yang lebih informatif.
+- Menambahkan optimistic update untuk meningkatkan pengalaman pengguna.
+- Menambahkan fitur reminder jatuh tempo kasbon.
+
+---
+
+## Time Spent
+
+Estimasi waktu pengerjaan:
+
+**Total: ±10.5 jam**
+
+---
+
+## Future Improvements
+
+- Reminder jatuh tempo
+- Export PDF / CSV
+- Multiple currency support
+- Recurring debt tracking
+- Dashboard analytics
+- Mobile application version
