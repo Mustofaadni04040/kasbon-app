@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kasbon App
 
-## Getting Started
+Starter project untuk hiring task aplikasi Kasbon menggunakan:
 
-First, run the development server:
+- Next.js 16 App Router
+- TypeScript
+- Tailwind CSS v4
+- Supabase Auth + PostgreSQL
+- Lucide React
+- Zod
+
+## Setup Lokal
+
+### 1. Install dependency
+
+```bash
+npm install
+```
+
+### 2. Siapkan environment variable
+
+Copy file contoh env:
+
+```bash
+copy .env.example .env.local
+```
+
+Lalu isi value berikut:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+### 3. Jalankan migration database
+
+File migration awal ada di:
+
+```text
+supabase/migrations/20260611133000_create_debts.sql
+```
+
+Jalankan lewat Supabase SQL Editor atau Supabase CLI.
+
+### 4. Jalankan development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Struktur Folder
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```text
+app/
+components/
+lib/
+supabase/
+types/
+validations/
+```
 
-## Learn More
+Penjelasan singkat:
 
-To learn more about Next.js, take a look at the following resources:
+- `app` -> routing App Router, layout, page, server action, dan API route
+- `components` -> komponen UI reusable
+- `lib` -> helper umum, auth helper, Supabase client, formatter, env
+- `supabase` -> migration SQL dan file terkait Supabase
+- `types` -> shared TypeScript types
+- `validations` -> schema validasi input
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Yang Sudah Discaffold
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Landing page awal dengan CTA login dan signup
+- Login form dan signup form berbasis Supabase Auth
+- Logout action
+- Protected dashboard placeholder
+- Supabase browser client, server client, dan `proxy.ts` untuk refresh session
+- Migration SQL tabel `debts` + trigger `updated_at` + RLS policy
 
-## Deploy on Vercel
+## Commit Checkpoint
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Supaya history commit kamu rapi, saya saranin pola ini:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. `chore: install supabase lucide zod and auth scaffold`
+2. `feat: add debts schema migration and rls policies`
+3. `feat: implement debts api endpoints`
+4. `feat: build dashboard summary and debt list`
+5. `feat: add create edit and settle debt flows`
+
+## Next Step yang Disarankan
+
+1. Implement API `debts`
+2. Buat dashboard summary dan list
+3. Tambah form create/edit debt
+4. Sambungkan filter status dan type
+5. Rapikan README akhir, deploy, dan Loom
