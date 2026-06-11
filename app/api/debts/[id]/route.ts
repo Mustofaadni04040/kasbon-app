@@ -90,7 +90,7 @@ export async function PATCH(
 
   if (parsedBody.data.settled !== undefined) {
     updatePayload.settled_at = parsedBody.data.settled
-      ? existingDebt.settled_at ?? new Date().toISOString()
+      ? (existingDebt.settled_at ?? new Date().toISOString())
       : null;
   }
 
@@ -141,14 +141,14 @@ export async function DELETE(
     .maybeSingle();
 
   if (error) {
-    return createErrorResponse("Failed to delete debt.", 500);
+    return createErrorResponse("Gagal menghapus catatan kasbon.", 500);
   }
 
   if (!data) {
-    return createErrorResponse("Debt not found.", 404);
+    return createErrorResponse("Catatan kasbon tidak ditemukan.", 404);
   }
 
   return createSuccessResponse({
-    message: "Debt deleted successfully.",
+    message: "Catatan kasbon berhasil dihapus.",
   });
 }

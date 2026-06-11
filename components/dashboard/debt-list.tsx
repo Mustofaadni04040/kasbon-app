@@ -1,4 +1,11 @@
-import { CalendarDays, CheckCircle2, Clock3, WalletCards } from "lucide-react";
+import {
+  CalendarDays,
+  CheckCircle2,
+  Clock3,
+  Pencil,
+  Trash2,
+  WalletCards,
+} from "lucide-react";
 import { formatAbsoluteDate } from "@/lib/formatters/date";
 import { formatRelativeDate } from "@/lib/formatters/date";
 import { formatRupiah } from "@/lib/formatters/currency";
@@ -6,6 +13,10 @@ import type { DebtRecord } from "@/types";
 
 interface DebtListProps {
   items: DebtRecord[];
+  activeDebtId: string | null;
+  onEdit: (item: DebtRecord) => void;
+  onDelete: (item: DebtRecord) => void;
+  onSettle: (item: DebtRecord) => void;
 }
 
 function getTypeLabel(type: DebtRecord["type"]): string {
@@ -18,7 +29,13 @@ function getTypeBadgeClassName(type: DebtRecord["type"]): string {
     : "bg-amber-50 text-amber-700";
 }
 
-export function DebtList({ items }: DebtListProps) {
+export function DebtList({
+  items,
+  activeDebtId,
+  onDelete,
+  onEdit,
+  onSettle,
+}: DebtListProps) {
   if (items.length === 0) {
     return (
       <section className="rounded-3xl border border-dashed border-zinc-300 bg-white p-8 text-center shadow-sm">
@@ -39,6 +56,7 @@ export function DebtList({ items }: DebtListProps) {
     <section className="space-y-4">
       {items.map((item) => {
         const isSettled = item.settledAt !== null;
+        const isBusy = activeDebtId === item.id;
 
         return (
           <article
@@ -99,6 +117,40 @@ export function DebtList({ items }: DebtListProps) {
                     </span>
                   ) : null}
                 </div>
+              </div>
+
+              <div className="flex shrink-0 flex-wrap gap-2">
+                {!isSettled ? (
+                  <button
+                    type="button"
+                    disabled={isBusy}
+                    onClick={() => onSettle(item)}
+                    className="inline-flex items-center gap-2 rounded-2xl bg-emerald-50 text-emerald-700 px-4 py-2 text-sm font-medium transition cursor-pointer hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-70"
+                  >
+                    <CheckCircle2 className="h-4 w-4" />
+                    Tandai lunas
+                  </button>
+                ) : null}
+
+                <button
+                  type="button"
+                  disabled={isBusy}
+                  onClick={() => onEdit(item)}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 px-4 py-2 text-sm font-medium cursor-pointer text-zinc-700 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  <Pencil className="h-4 w-4" />
+                  Edit
+                </button>
+
+                <button
+                  type="button"
+                  disabled={isBusy}
+                  onClick={() => onDelete(item)}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-red-200 px-4 py-2 text-sm font-medium cursor-pointer text-red-700 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Hapus
+                </button>
               </div>
             </div>
           </article>

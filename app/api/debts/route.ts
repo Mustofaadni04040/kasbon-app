@@ -32,10 +32,7 @@ export async function GET(request: Request): Promise<Response> {
   }
 
   const supabase = await createClient();
-  let query = supabase
-    .from("debts")
-    .select("*")
-    .eq("user_id", user.id);
+  let query = supabase.from("debts").select("*").eq("user_id", user.id);
 
   if (parsedQuery.data.status === "unsettled") {
     query = query.is("settled_at", null);
@@ -57,7 +54,7 @@ export async function GET(request: Request): Promise<Response> {
   const { data, error } = await sortedQuery;
 
   if (error) {
-    return createErrorResponse("Failed to fetch debts.", 500);
+    return createErrorResponse("Gagal mengambil daftar kasbon.", 500);
   }
 
   return createSuccessResponse({
@@ -73,7 +70,7 @@ export async function POST(request: Request): Promise<Response> {
   const { user, authError, status } = await getApiAuth();
 
   if (!user) {
-    return createErrorResponse(authError ?? "Authentication required.", status);
+    return createErrorResponse(authError ?? "Autentikasi diperlukan.", status);
   }
 
   const { body, error: bodyError } = await parseJsonBody(request);
@@ -108,7 +105,7 @@ export async function POST(request: Request): Promise<Response> {
     .single();
 
   if (error) {
-    return createErrorResponse("Failed to create debt.", 500);
+    return createErrorResponse("Gagal membuat catatan kasbon.", 500);
   }
 
   return createSuccessResponse(

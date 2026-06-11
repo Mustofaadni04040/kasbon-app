@@ -15,7 +15,7 @@ export async function getApiAuth(): Promise<{
   if (error) {
     return {
       user: null,
-      authError: "Failed to verify user session.",
+      authError: "Gagal untuk memverifikasi user.",
       status: 500,
     };
   }
@@ -23,7 +23,7 @@ export async function getApiAuth(): Promise<{
   if (!user) {
     return {
       user: null,
-      authError: "Authentication required.",
+      authError: "Autentikasi diperlukan.",
       status: 401,
     };
   }

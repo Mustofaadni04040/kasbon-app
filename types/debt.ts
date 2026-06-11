@@ -32,3 +32,15 @@ export interface DebtListQuery {
   search: string;
   sort: DebtSortOption;
 }
+
+export interface CreateDebtPayload {
+  type: DebtType;
+  counterpartName: string;
+  amount: number;
+  note: string | null;
+  dueDate: string | null;
+}
+
+export interface UpdateDebtPayload extends Partial<CreateDebtPayload> {
+  settled?: boolean;
+}
