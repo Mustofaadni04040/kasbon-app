@@ -1,4 +1,10 @@
-import type { Database, DebtListQuery, DebtRecord } from "@/types";
+import type {
+  Database,
+  DebtCounterpartGroup,
+  DebtListQuery,
+  DebtRecord,
+  DebtSummary,
+} from "@/types";
 
 type DebtRow = Database["public"]["Tables"]["debts"]["Row"];
 
@@ -40,4 +46,51 @@ export function applyDebtListSort<
     default:
       return query.order("created_at", { ascending: false });
   }
+}
+
+export function calculateDebtSummary(items: DebtRecord[]): DebtSummary {
+  const totalOwedToMe = items
+    .filter((item) => item.type === "owed_to_me")
+    .reduce((total, item) => total + item.amount, 0);
+
+  const totalIOwe = items
+    .filter((item) => item.type === "i_owe")
+    .reduce((total, item) => total + item.amount, 0);
+
+  return {
+    totalOwedToMe,
+    totalIOwe,
+    net: totalOwedToMe - totalIOwe,
+  };
+}
+
+export function groupDebtsByCounterpart(
+  items: DebtRecord[],
+): DebtCounterpartGroup[] {
+  const groupedMap = new Map<string, DebtCounterpartGroup>();
+
+  items.forEach((item) => {
+    const key = item.counterpartName.trim().toLocaleLowerCase("id-ID");
+    const existingGroup = groupedMap.get(key);
+
+    if (existingGroup) {
+      existingGroup.count += 1;
+      existingGroup.totalAmount += item.amount;
+      existingGroup.unsettledCount += item.settledAt ? 0 : 1;
+      existingGroup.settledCount += item.settledAt ? 1 : 0;
+      return;
+    }
+
+    groupedMap.set(key, {
+      counterpartName: item.counterpartName,
+      count: 1,
+      totalAmount: item.amount,
+      unsettledCount: item.settledAt ? 0 : 1,
+      settledCount: item.settledAt ? 1 : 0,
+    });
+  });
+
+  return Array.from(groupedMap.values())
+    .filter((group) => group.count > 1)
+    .sort((leftGroup, rightGroup) => rightGroup.totalAmount - leftGroup.totalAmount);
 }

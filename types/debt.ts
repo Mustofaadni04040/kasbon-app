@@ -44,3 +44,17 @@ export interface CreateDebtPayload {
 export interface UpdateDebtPayload extends Partial<CreateDebtPayload> {
   settled?: boolean;
 }
+
+export interface DebtSummary {
+  totalOwedToMe: number;
+  totalIOwe: number;
+  net: number;
+}
+
+export interface DebtCounterpartGroup {
+  counterpartName: string;
+  count: number;
+  totalAmount: number;
+  unsettledCount: number;
+  settledCount: number;
+}

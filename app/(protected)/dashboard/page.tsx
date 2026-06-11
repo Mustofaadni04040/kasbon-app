@@ -1,28 +1,20 @@
-import { LogoutButton } from "@/components/auth/logout-button";
 import { DashboardClient } from "@/components/dashboard/dashboard-client";
-import { requireUser } from "@/lib/auth";
 
-export default async function DashboardPage() {
-  const user = await requireUser();
-
+export default function DashboardPage() {
   return (
     <div className="space-y-6">
-      <section className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <section className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-8">
+        <div className="flex flex-col gap-4">
           <div>
-            <p className="text-sm font-medium text-zinc-500">
-              Dashboard Kasflow
-            </p>
+            <p className="text-sm font-medium text-zinc-500">Dashboard Kasbon</p>
             <h1 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">
               Ringkasan utang piutang pribadi
             </h1>
           </div>
-
-          <LogoutButton />
         </div>
       </section>
 
-      <DashboardClient userEmail={user.email} />
+      <DashboardClient />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useState } from "react";
 import type {
   DebtListQuery,
   DebtSortOption,
@@ -22,16 +23,31 @@ export function DebtFilters({
   onTypeChange,
   onSortChange,
 }: DebtFiltersProps) {
+  const [searchDraft, setSearchDraft] = useState<string>(filters.search);
+  const debounceTimeoutRef = useRef<number | null>(null);
+
+  function handleSearchChange(value: string): void {
+    setSearchDraft(value);
+
+    if (debounceTimeoutRef.current !== null) {
+      window.clearTimeout(debounceTimeoutRef.current);
+    }
+
+    debounceTimeoutRef.current = window.setTimeout(() => {
+      onSearchChange(value);
+    }, 400);
+  }
+
   return (
-    <section className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-      <div className="grid gap-4 md:grid-cols-4">
-        <label className="block">
+    <section className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <label className="block sm:col-span-2 xl:col-span-1">
           <span className="mb-2 block text-sm font-medium text-zinc-700">
             Cari nama orang
           </span>
           <input
-            value={filters.search}
-            onChange={(event) => onSearchChange(event.target.value)}
+            value={searchDraft}
+            onChange={(event) => handleSearchChange(event.target.value)}
             placeholder="Cari berdasarkan nama..."
             className="w-full rounded-2xl border border-zinc-200 px-4 py-3 text-sm outline-none transition focus:border-zinc-400"
           />

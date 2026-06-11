@@ -1,4 +1,4 @@
-# Kasflow App
+# Kasbon App
 
 Starter project untuk hiring task aplikasi Kasflow menggunakan:
 
@@ -8,6 +8,7 @@ Starter project untuk hiring task aplikasi Kasflow menggunakan:
 - Supabase Auth + PostgreSQL
 - Lucide React
 - Zod
+- ECharts
 
 ## Setup Lokal
 
@@ -74,9 +75,35 @@ Penjelasan singkat:
 - Login form dan signup form berbasis Supabase Auth
 - Logout action
 - Dashboard summary, filter, dan debt list yang consume API
+- Create, edit, tandai lunas, dan hapus debt
+- Group multiple debts dari orang yang sama
+- Page chart bonus di `/charts`
 - Supabase browser client, server client, dan `proxy.ts` untuk refresh session
 - Migration SQL tabel `debts` + trigger `updated_at` + RLS policy
 - API `GET/POST /api/debts` dan `PATCH/DELETE /api/debts/[id]`
+
+## Library Tambahan
+
+- `zod` -> validasi request body dan query
+- `lucide-react` -> icon UI ringan dan konsisten
+- `echarts` + `echarts-for-react` -> page bonus bar chart compare total dihutangi vs total saya hutang
+
+## Submission Checklist
+
+- [ ] Signup dan login berjalan pakai Supabase Auth
+- [ ] Logout berjalan
+- [ ] Route protected hanya bisa diakses user login
+- [ ] Migration `debts` sudah dijalankan di Supabase
+- [ ] RLS sudah dites dengan minimal 2 user berbeda
+- [ ] API debts aman dan hanya akses data milik user login
+- [ ] Format uang tampil `Rp 1.234.000`
+- [ ] Dashboard summary, filter, dan list berjalan
+- [ ] Create, edit, tandai lunas, dan hapus berjalan lalu tetap konsisten setelah refresh
+- [ ] Group multiple debts tampil
+- [ ] Bonus chart page `/charts` tampil
+- [ ] README final berisi setup, approach, trade-off, dan time spent
+- [ ] Deploy Vercel aktif
+- [ ] Loom demo siap
 
 ## Commit Checkpoint
 
@@ -90,7 +117,7 @@ Supaya history commit kamu rapi, saya saranin pola ini:
 
 ## Next Step yang Disarankan
 
-1. Tambah form create/edit debt
-2. Tambah action tandai lunas dan hapus
-3. Hubungkan mutasi ke refresh dashboard
-4. Rapikan README akhir, deploy, dan Loom
+1. Tes manual end-to-end dengan 2 user
+2. Rapikan copy README final: approach, trade-off, time spent
+3. Deploy ke Vercel
+4. Rekam Loom
